@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+		<title>[DEV] RoosterApp</title>
+		<link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen" />
+		<script type="text/javascript"> 
+			function onPageLoad() {
+				document.addEventListener("deviceready", onDeviceReady(), false);
+			}
+			
+			function onDeviceReady() {
+				document.addEventListener("offline", onOffline(), false);
+				document.addEventListener("online", onOnline(), false);
+				document.addEventListener("menubutton", onMenuKeyDown(), false);
+			}
+			
+			function onOnline() {
+				// Handle the online event
+				offlinediv = document.all['deviceOffline'];
+				offlinediv.style.display="none";
+			}
+			function onOffline() {
+				// Handle the offline event
+				offlinediv = document.all['deviceOffline'];
+				offlinediv.style.display="block";
+			}
+			function onMenuKeyDown() {
+				// Handle the menukey event
+				// show menudiv and let user choose what to do
+				menudiv = document.all['menuDiv'];
+				
+				if(menudiv.style.display == 'none'){
+					menudiv.style.display="block";
+				}else{
+					menudiv.style.display="none";
+				}
+			}
+			
+			function gotoMainMenu(){
+				onMenuKeyDown();
+				appframe = document.all['contentIframe'];
+				appframe.src = 'http://new.kevinalberts.nl.';
+			}
+			
+			function exitApplication(){
+				navigator.device.exitApp()
+			}
+			
+			
+		</script>
+	</head>
+	<body onload="onPageLoad()">
+		<div id ="menuDiv" name="menuDiv" style="display:none;height:100px;width:350px;background:#333333;color:#ffffff;position:absolute">
+		<div id="mainMenuBtn" name="mainMenuBtn" style="width:50%;height:70px;font-family:'Verdana';text-align:center;float:left;padding-top:30px;" onclick="gotoMainMenu()">Naar</br>Hoofdmenu</div>
+		<div id="closeAppBtn" name="closeAppBtn" style="width:50%;height:70px;font-family:'Verdana';text-align:center;float:left;padding-top:30px;" onclick="exitApplication()">Applicatie</br>Afsluiten</div>
+		</div>
+		<div id="deviceOffline" style="position:absolute;top:100px;width:350px;height:70px;background:#333333;color:#ffffff;text-align:center;padding-top:30px;display:none;">U heeft geen verbinding met internet. </br>Maak verbinding om deze app te gebruiken.</div>
+		<iframe id="contentIframe" src="http://new.kevinalberts.nl/"><p id="contentText">Uw browser ondersteunt geen iframes. <a href="http://cup.kevinalberts.nl/">Klik hier om de RoosterApp te openen.</a></p></iframe>
+		<div style="display:none;width:0px;height:0px;"></div>
+	</body>
+</html>
